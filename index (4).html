@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ledger — grade &amp; GPA tracker</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="masthead-title">
+      <h1>Ledger</h1>
+      <p class="masthead-sub">grades, weighted &amp; tallied</p>
+    </div>
+    <div class="seal" id="overall-seal">
+      <div class="seal-ring">
+        <span class="seal-value" id="seal-value">—</span>
+        <span class="seal-label">GPA</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="ledger-body">
+
+    <nav class="class-column" aria-label="Classes">
+      <div class="column-head">
+        <h2>Classes</h2>
+      </div>
+      <ul class="class-list" id="class-list"></ul>
+      <button class="btn-add-class" id="btn-add-class" type="button">+ Add a class</button>
+
+      <div class="scale-toggle">
+        <button class="link-btn" id="btn-toggle-scale" type="button">Edit GPA scale</button>
+      </div>
+    </nav>
+
+    <section class="class-panel" id="class-panel" aria-live="polite">
+      <div class="empty-state" id="empty-state">
+        <p>No class selected.</p>
+        <p class="empty-hint">Add a class on the left, or select one, to start filling in the ledger.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <section class="overall-section">
+    <div class="column-head">
+      <h2>Transcript</h2>
+      <p class="section-hint">Every class, tallied against your overall GPA.</p>
+    </div>
+    <div class="overall-table-wrap">
+      <table class="overall-table" id="overall-table">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>Credits</th>
+            <th>Grade</th>
+            <th>Letter</th>
+            <th>Weight bonus</th>
+            <th>Weighted GPA</th>
+          </tr>
+        </thead>
+        <tbody id="overall-table-body"></tbody>
+        <tfoot>
+          <tr>
+            <td>Overall</td>
+            <td id="overall-credits">—</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td id="overall-gpa-cell">—</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="overall-goal">
+      <h3>What GPA do I need?</h3>
+      <p class="section-hint">Pick a class that isn't locked in yet, set your target overall GPA, and see what that one class needs to carry.</p>
+      <div class="goal-row">
+        <label>
+          Target overall GPA
+          <input type="number" step="0.01" id="overall-goal-target" placeholder="e.g. 3.7">
+        </label>
+        <label>
+          Class to solve for
+          <select id="overall-goal-class"></select>
+        </label>
+        <button class="btn-solve" id="overall-goal-solve" type="button">Solve</button>
+      </div>
+      <p class="goal-result" id="overall-goal-result"></p>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    <p>Everything here is stored only in this browser (<code>localStorage</code>) — nothing is sent anywhere.</p>
+    <button class="link-btn danger" id="btn-reset" type="button">Clear all data</button>
+  </footer>
+
+</div>
+
+<div class="modal-backdrop" id="scale-modal-backdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Edit GPA scale">
+    <h2>GPA scale</h2>
+    <p class="section-hint">The percent cutoff where each grade point starts. Used to convert every class's percent grade into GPA points.</p>
+    <table class="scale-table" id="scale-table">
+      <thead>
+        <tr><th>Letter</th><th>Min %</th><th>GPA points</th><th></th></tr>
+      </thead>
+      <tbody id="scale-table-body"></tbody>
+    </table>
+    <button class="link-btn" id="scale-add-row" type="button">+ Add row</button>
+    <div class="modal-actions">
+      <button class="link-btn" id="scale-reset-default" type="button">Reset to default</button>
+      <button class="btn-solve" id="scale-close" type="button">Done</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
