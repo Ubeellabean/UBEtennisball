@@ -498,7 +498,7 @@ function renderAssignmentRow(cls, cat, a) {
     <input type="number" step="0.5" value="${a.max}" aria-label="Score possible">
     <button class="assignment-remove" type="button" aria-label="Remove assignment">✕</button>
   `;
-  const [nameInput, scoreInput, , maxInput] = row.querySelectorAll("input");
+  const [nameInput, scoreInput, maxInput] = row.querySelectorAll("input");
   const removeBtn = row.querySelector(".assignment-remove");
 
   nameInput.addEventListener("change", (e) => {
